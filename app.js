@@ -15,6 +15,28 @@ const render = require("./lib/htmlRenderer");
 // and to create objects for each team member (using the correct classes as blueprints!)
 
 
+
+// array of team member question for user
+const teamMemberQuestion = [ 
+    {
+        type: 'list',
+        message: 'What type of team member would you like to add?',
+        name: 'Team Member',
+        choices: ['Engineer','Intern',"I don't want to add any more team members"],
+    }
+];
+
+// function to initialize program
+function init() {
+    inquirer
+        .prompt(teamMemberQuestion)
+        .then((data) =>
+            console.log(data)
+        );
+}
+
+
+
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
@@ -34,3 +56,6 @@ const render = require("./lib/htmlRenderer");
 // for further information. Be sure to test out each class and verify it generates an
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work! ```
+
+// function call to initialize program
+init();
