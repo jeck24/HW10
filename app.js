@@ -14,25 +14,132 @@ const render = require("./lib/htmlRenderer");
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
-
-
-// array of team member question for user
-const teamMemberQuestion = [ 
+// array of manager question for user
+const questions = [ 
+    {
+        type: 'input',
+        message: "What is your manager's name?",
+        name: 'Manager name',
+    },
+    {
+        type: 'input',
+        message: "What is your manager's id?",
+        name: 'Manager id',
+    },
+    {
+        type: 'input',
+        message: "What is your manager's office number?",
+        name: 'Manager number',
+    },
     {
         type: 'list',
         message: 'What type of team member would you like to add?',
-        name: 'Team Member',
+        name: 'teamMember',
         choices: ['Engineer','Intern',"I don't want to add any more team members"],
     }
+    
 ];
 
-// function to initialize program
+//array of engineer questions for user
+const secondaryQuestionsEngineer = [ 
+    {
+        type: 'input',
+        message: "What is the engineer's name?",
+        name: 'engineerName',
+    },
+    {
+        type: 'input',
+        message: "What is the engineer's id?",
+        name: 'engineerId',
+    },
+    {
+        type: 'input',
+        message: "What is engineer's GitHub account?",
+        name: 'engineerGithub',
+    },
+    {
+        type: 'list',
+        message: 'What type of team member would you like to add?',
+        name: 'teamMember',
+        choices: ['Engineer','Intern',"I don't want to add any more team members"],
+    }
+    
+];
+
+const secondaryQuestionsIntern = [ 
+    {
+        type: 'input',
+        message: "What is the intern's name?",
+        name: 'engineerName',
+    },
+    {
+        type: 'input',
+        message: "What is the intern's id?",
+        name: 'engineerId',
+    },
+    {
+        type: 'input',
+        message: "What is intern's school?",
+        name: 'engineerGithub',
+    },
+    {
+        type: 'list',
+        message: 'What type of team member would you like to add?',
+        name: 'teamMember',
+        choices: ['Engineer','Intern',"I don't want to add any more team members"],
+    }
+    
+];
+
+//function for secondary Engineer questions
+function secondaryEngineer(){
+    inquirer
+        .prompt(secondaryQuestionsEngineer)
+        .then((data) => {
+            if (data.teamMember === "Engineer"){
+                secondaryEngineer();
+            }
+            else if (data.teamMember === "Intern"){
+                secondaryIntern();
+            }
+            else{
+                console.log("finish");
+            }
+        });
+}
+
+//function for secondary Intern questions
+function secondaryIntern(){
+    inquirer
+        .prompt(secondaryQuestionsIntern)
+        .then((data) => {
+            if (data.teamMember === "Engineer"){
+                secondaryEngineer();
+            }
+            else if (data.teamMember === "Intern"){
+                secondaryIntern();
+            }
+            else{
+                console.log("finish");
+            }
+        });
+}
+
+// function to initialize questions
 function init() {
     inquirer
-        .prompt(teamMemberQuestion)
-        .then((data) =>
-            console.log(data)
-        );
+        .prompt(questions)
+        .then((data) => {
+            if (data.teamMember === "Engineer"){
+                secondaryEngineer();
+            }
+            else if (data.teamMember === "Intern"){
+                secondaryIntern();
+            }
+            else{
+                console.log("finish");
+            }
+        });
 }
 
 
